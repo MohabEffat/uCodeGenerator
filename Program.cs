@@ -1,4 +1,5 @@
 using Carter;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,8 +38,20 @@ app.Use(async (context, next) =>
     }
     catch (Exception ex)
     {
+        context.Response.ContentType = "application/json";
         context.Response.StatusCode = 500;
-        await context.Response.WriteAsync($"Something went wrong: {ex.Message}");
+        var errorResponse = new
+        {
+            context.Response.StatusCode,
+            ex.Message,
+        };
+
+        var json = JsonSerializer.Serialize(errorResponse, new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+
+        await context.Response.WriteAsync(json);
     }
 });
 
