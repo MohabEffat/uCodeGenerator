@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CodeService")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0a227ec799d033867d98f19cc5b884383575c8e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0955a8360ef3804668b0b38165a23e7c520132d")]
 [assembly: System.Reflection.AssemblyProductAttribute("CodeService")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CodeService")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
