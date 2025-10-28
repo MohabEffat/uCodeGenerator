@@ -1,0 +1,11 @@
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\bin\Debug\net9.0\uCodeGenerator.Core.deps.json
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\bin\Debug\net9.0\uCodeGenerator.Core.dll
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\bin\Debug\net9.0\uCodeGenerator.Core.pdb
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net9.0\uCodeGenerator.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net9.0\uCodeGenerator.Core.AssemblyInfoInputs.cache
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net9.0\uCodeGenerator.Core.AssemblyInfo.cs
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net9.0\uCodeGenerator.Core.csproj.CoreCompileInputs.cache
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net9.0\uCodeGenerator.Core.dll
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net9.0\refint\uCodeGenerator.Core.dll
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net9.0\uCodeGenerator.Core.pdb
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net9.0\ref\uCodeGenerator.Core.dll
