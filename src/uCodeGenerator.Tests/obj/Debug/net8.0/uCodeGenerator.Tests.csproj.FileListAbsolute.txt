@@ -99,3 +99,4 @@ C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenera
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Tests\obj\Debug\net8.0\uCodeGenerator.Tests.pdb
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Tests\obj\Debug\net8.0\uCodeGenerator.Tests.genruntimeconfig.cache
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Tests\obj\Debug\net8.0\ref\uCodeGenerator.Tests.dll
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Tests\obj\Debug\net8.0\uCodeGenerator.Tests.sourcelink.json

@@ -9,3 +9,4 @@ C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenera
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net8.0\refint\uCodeGenerator.Core.dll
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net8.0\uCodeGenerator.Core.pdb
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net8.0\ref\uCodeGenerator.Core.dll
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Core\obj\Debug\net8.0\uCodeGenerator.Core.sourcelink.json

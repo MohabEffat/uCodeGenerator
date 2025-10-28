@@ -66,3 +66,4 @@ C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenera
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Api\obj\Debug\net8.0\uCodeGenerator.Api.pdb
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Api\obj\Debug\net8.0\uCodeGenerator.Api.genruntimeconfig.cache
 C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Api\obj\Debug\net8.0\ref\uCodeGenerator.Api.dll
+C:\Users\Zeink\OneDrive\Desktop\Cognimark\code_generator\backend\src\uCodeGenerator.Api\obj\Debug\net8.0\uCodeGenerator.Api.sourcelink.json

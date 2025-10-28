@@ -2,7 +2,7 @@ namespace uCodeGenerator.Core.Utils;
 
 public static class Helper
 {
-    // Map for checksum weights
+    // Character weight table (keep yours here – do NOT change unless domain team tells you)
     public static readonly IReadOnlyDictionary<char, int> CharacterValues = new Dictionary<char, int>
     {
         { '0', 2 }, { '1', 21 }, { '2', 30 }, { '3', 10 }, { '4', 4 },
@@ -16,24 +16,55 @@ public static class Helper
         { 'Z', 35 },
     };
 
-    // Compute checksum modulo 10
-    public static int ComputeChecksum(string codeWithoutChecksum)
-    {
-        int sum = 0;
-        foreach (var c in codeWithoutChecksum.ToUpperInvariant())
-        {
-            if (!CharacterValues.TryGetValue(c, out var value))
-                throw new Exception($"Unsupported character '{c}' in checksum calc.");
+    //
+    // NEW CHECKSUM LOGIC (from you)
+    //
+    private static int CalculateWeights(string code)
+        => code.Where(CharacterValues.ContainsKey)
+               .Sum(c => CharacterValues[c]);
 
-            sum += value;
+    private static int CalculateChecksumInternal(string codeWithoutChecksum)
+    {
+        // 1. global weight = sum of CharacterValues for all chars
+        int weight = CalculateWeights(codeWithoutChecksum);
+
+        // Take its hundreds / tens / ones digits
+        // Example: if weight = 129
+        //   firstDigit  = 1
+        //   secondDigit = 2
+        //   thirdDigit  = 9
+        int weightFirstDigit = weight / 100;
+        int weightSecondDigit = (weight / 10) % 10;
+        int weightThirdDigit = weight % 10;
+
+        // We build a repeating 3-number pattern [d1, d2, d3]
+        int[] multipliers = { weightFirstDigit, weightSecondDigit, weightThirdDigit };
+
+        int sumOfModules = 0;
+
+        for (int i = 0; i < codeWithoutChecksum.Length; i++)
+        {
+            char c = codeWithoutChecksum[i];
+            if (CharacterValues.TryGetValue(c, out int value))
+            {
+                // multiply each character weight by the repeating [d1,d2,d3]
+                int m = multipliers[i % 3];
+                sumOfModules += value * m;
+            }
         }
 
-        return sum % 10;
+        // checksum digit is (10 - (sumOfModules % 10)) % 10
+        int checksum = (10 - (sumOfModules % 10)) % 10;
+        return checksum;
     }
 
+    // This is the method we call everywhere else
+    public static int ComputeChecksum(string codeWithoutChecksum)
+        => CalculateChecksumInternal(codeWithoutChecksum);
+
+
     // ---------- VALIDATION HELPERS ----------
-    // These do NOT return IResult anymore.
-    // They now return `null` if OK, or a string error message if invalid.
+    // Return null if valid, or an error message string if invalid.
 
     public static string? ValidatePrefix(string? prefix, HashSet<char> allowedPrefixChars)
     {
@@ -46,7 +77,7 @@ public static class Helper
         if (!prefix.All(char.IsLetter))
             return "prefix must be A-Z letters";
 
-        // business rule: only certain letters allowed
+        // enforce allowed chars rule (your business rule)
         if (!allowedPrefixChars.Contains(char.ToUpperInvariant(prefix[0])) ||
             !allowedPrefixChars.Contains(char.ToUpperInvariant(prefix[1])))
             return "prefix contains invalid characters";
