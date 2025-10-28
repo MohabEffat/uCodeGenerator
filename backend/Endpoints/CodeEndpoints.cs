@@ -1,6 +1,7 @@
 ﻿using Carter;
+using CodeService;
 
-namespace uCodeGenerator.Endpoints
+namespace CodeApi.Endpoints
 {
     public class CodeEndpoints : ICarterModule
     {
@@ -14,8 +15,10 @@ namespace uCodeGenerator.Endpoints
                 var prefix = code[..2];
 
                 // --- validation ---
-                if (Helper.ValidatePrefix(prefix) is { } bad)
-                    return bad;
+                var validation = Helper.ValidatePrefix(prefix);
+
+                if (!validation.IsValid)
+                    return Results.BadRequest(validation.ErrorMessage);
 
                 var numericValues = code[2..10];
 
@@ -51,11 +54,13 @@ namespace uCodeGenerator.Endpoints
                 year ??= "25";
 
                 // --- validation ---
-                if (Helper.ValidatePrefix(prefix) is { } bad)
-                    return bad;
+                var validation = Helper.ValidatePrefix(prefix);
+                if (!validation.IsValid)
+                    return Results.BadRequest(validation.ErrorMessage);
 
-                if (Helper.ValidateYear(year) is { } badYear)
-                    return badYear;
+                var validationYear = Helper.ValidateYear(year);
+                if (!validationYear.IsValid)
+                    return Results.BadRequest(validationYear.ErrorMessage);
 
                 if (count <= 0 || count > 10_000)
                     return Results.BadRequest("count must be between 1 and 10,000.");
@@ -76,11 +81,13 @@ namespace uCodeGenerator.Endpoints
                 year ??= "25";
 
                 // --- validation ---
-                if (Helper.ValidatePrefix(prefix) is { } bad)
-                    return bad;
+                var validation = Helper.ValidatePrefix(prefix);
+                if (!validation.IsValid)
+                    return Results.BadRequest(validation.ErrorMessage);
 
-                if (Helper.ValidateYear(year) is { } badYear)
-                    return badYear;
+                var validationYear = Helper.ValidateYear(year);
+                if (!validationYear.IsValid)
+                    return Results.BadRequest(validationYear.ErrorMessage);
 
                 if (count <= 0 || count > 1_000_000)
                     return Results.BadRequest("count must be between 1 and 1,000,000.");

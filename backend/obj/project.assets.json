@@ -374,6 +374,16 @@
         "build": {
           "buildTransitive/net6.0/System.Text.Json.targets": {}
         }
+      },
+      "CodeService/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CodeService.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CodeService.dll": {}
+        }
       }
     }
   },
@@ -1721,11 +1731,17 @@
         "system.text.json.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "CodeService/1.0.0": {
+      "type": "project",
+      "path": "../CodeService/CodeService.csproj",
+      "msbuildProject": "../CodeService/CodeService.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "Carter >= 8.2.1",
+      "CodeService >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.6.2"
     ]
   },
@@ -1736,9 +1752,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\.Net Projects\\uCodeGenerator\\backend\\uCodeGenerator.csproj",
-      "projectName": "uCodeGenerator",
-      "projectPath": "D:\\.Net Projects\\uCodeGenerator\\backend\\uCodeGenerator.csproj",
+      "projectUniqueName": "D:\\.Net Projects\\uCodeGenerator\\backend\\CodeApi.csproj",
+      "projectName": "CodeApi",
+      "projectPath": "D:\\.Net Projects\\uCodeGenerator\\backend\\CodeApi.csproj",
       "packagesPath": "C:\\Users\\mohab\\.nuget\\packages\\",
       "outputPath": "D:\\.Net Projects\\uCodeGenerator\\backend\\obj\\",
       "projectStyle": "PackageReference",
@@ -1761,7 +1777,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\.Net Projects\\uCodeGenerator\\CodeService\\CodeService.csproj": {
+              "projectPath": "D:\\.Net Projects\\uCodeGenerator\\CodeService\\CodeService.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

@@ -1,0 +1,12 @@
+D:\.Net Projects\uCodeGenerator\CodeService\bin\Debug\net8.0\CodeService.deps.json
+D:\.Net Projects\uCodeGenerator\CodeService\bin\Debug\net8.0\CodeService.dll
+D:\.Net Projects\uCodeGenerator\CodeService\bin\Debug\net8.0\CodeService.pdb
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\CodeService.GeneratedMSBuildEditorConfig.editorconfig
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\CodeService.AssemblyInfoInputs.cache
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\CodeService.AssemblyInfo.cs
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\CodeService.csproj.CoreCompileInputs.cache
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\CodeService.sourcelink.json
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\CodeService.dll
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\refint\CodeService.dll
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\CodeService.pdb
+D:\.Net Projects\uCodeGenerator\CodeService\obj\Debug\net8.0\ref\CodeService.dll
