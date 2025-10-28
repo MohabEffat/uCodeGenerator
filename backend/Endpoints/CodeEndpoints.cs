@@ -8,84 +8,86 @@ namespace uCodeGenerator.Endpoints
         {
             app.MapGet("/validate", (string code) =>
             {
-                var prefix = code.Substring(0, 2);
+                if (string.IsNullOrWhiteSpace(code) || code.Length != 13)
+                    return Results.BadRequest("Code is required and must be 13 characters long");
 
-                var errors = new List<string>();
+                var prefix = code[..2];
 
-                if (code.Length != 13)
-                    errors.Add("Code Length is invalid");
+                // --- validation ---
+                if (Helper.ValidatePrefix(prefix) is { } bad)
+                    return bad;
 
-                // prefix validation
-                if (string.IsNullOrWhiteSpace(prefix))
-                    errors.Add("prefix is required");
-                else if (prefix.Length != 2)
-                    errors.Add("prefix must be exactly 2 characters");
-                else if (!prefix.All(c => uCodeGenerator.AllowedPrefixChars.Contains(char.ToUpperInvariant(c))))
-                    errors.Add("prefix contains invalid characters");
+                var numericValues = code[2..10];
 
-                // numeric values validation
-                var numericValues = code.Substring(2, code.Length - 5);
-
-                char checkSum = code[code.Length - 1];
+                char checkSum = code[^1];
 
                 if (!numericValues.All(char.IsDigit) || !char.IsDigit(checkSum))
-                {
-                    errors.Add("Invalid numeric section or checksum.");
-                }
+                    return Results.BadRequest("Invalid numeric section or checksum.");
+
+                // --- checkSum validation ---
+                int expectedChecksum = Helper.CalculateChecksum(code[..^1]);
+                int actualChecksum = checkSum - '0';
+
+                if (expectedChecksum != actualChecksum)
+                    return Results.BadRequest("Invalid checksum.");
 
                 // UID validation
-
                 var UIDs = code.Substring(10, 2);
 
                 if (!UIDs.All(char.IsLetter))
-                {
-                    errors.Add("Invalid UID formation.");
-                }
-
-                var ok = errors.Count == 0;
+                    return Results.BadRequest("Invalid UID formation.");
 
                 var data = new
                 {
                     code,
-                    isValid = ok
+                    isValid = true
                 };
-
-                if (!ok)
-                    return Results.BadRequest(new { errors, data });
 
                 return Results.Ok(new { data, limits = new{ maxCsv = 1_000_000, maxJson = 10_000 }});
             });
 
             app.MapGet("/generate", (string prefix, int count, string? year) =>
             {
-                if (string.IsNullOrWhiteSpace(prefix) || prefix.Length != 2)
-                    return Results.BadRequest("prefix must be exactly 2 characters.");
+                year ??= "25";
+
+                // --- validation ---
+                if (Helper.ValidatePrefix(prefix) is { } bad)
+                    return bad;
+
+                if (Helper.ValidateYear(year) is { } badYear)
+                    return badYear;
 
                 if (count <= 0 || count > 10_000)
                     return Results.BadRequest("count must be between 1 and 10,000.");
 
-                var generator = new uCodeGenerator(year ?? "25");
+                var generator = new uCodeGenerator();
 
                 var codes = new List<string>(capacity: count);
 
-                for (int i = 0; i < count; i++)
-                    codes.Add(generator.GenerateCode(prefix));
+                for (int i = 0; i < count; i++) {
+                    codes.Add(generator.GenerateCode(prefix, year));
+                }
 
-                return Results.Ok(new { prefix, year = year ?? "25", count, codes });
+                return Results.Ok(new { prefix, year, count, codes });
             });
 
             app.MapGet("/generate-csv", async (string prefix, int count, string? year, HttpResponse response) =>
             {
+                year ??= "25";
+
                 // --- validation ---
-                if (string.IsNullOrWhiteSpace(prefix) || prefix.Length != 2)
-                    return Results.BadRequest("prefix must be exactly 2 characters.");
+                if (Helper.ValidatePrefix(prefix) is { } bad)
+                    return bad;
+
+                if (Helper.ValidateYear(year) is { } badYear)
+                    return badYear;
+
                 if (count <= 0 || count > 1_000_000)
                     return Results.BadRequest("count must be between 1 and 1,000,000.");
 
-                var y = year ?? "25";
-                var generator = new uCodeGenerator(y);
+                var generator = new uCodeGenerator();
 
-                var fileName = $"codes_{prefix}_{y}_{count}.csv";
+                var fileName = $"codes_{prefix}_{year}_{count}.csv";
 
                 // --- set headers ONCE and don't return Results.Text after ---
                 response.ContentType = "text/csv";
@@ -96,7 +98,7 @@ namespace uCodeGenerator.Endpoints
 
                 for (int i = 0; i < count; i++)
                 {
-                    var code = generator.GenerateCode(prefix);
+                    var code = generator.GenerateCode(prefix, year);
                     await writer.WriteLineAsync(code);
                 }
 

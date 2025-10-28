@@ -2,6 +2,8 @@
 {
     public class uCodeGenerator
     {
+        private static Random random = new Random();
+
         public static readonly HashSet<char> AllowedPrefixChars = new HashSet<char>
         {
             'B', 'C', 'D', 'F', 'G', 'J', 'K', 'L', 'P', 'Q', 'R', 'T', 'V'
@@ -13,30 +15,16 @@
             'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Z'
         };
 
-        private readonly string _year;
-
         private int _sequence = 0;
 
-        public uCodeGenerator(string? year = "25")
+        public string GenerateCode(string prefix, string year)
         {
-            if (string.IsNullOrWhiteSpace(year) || year!.Length != 2 || !year.All(char.IsDigit))
-                throw new ArgumentException("Year must be a 2-digit string (e.g., '25').");
-            _year = year;
-        }
-
-        public string GenerateCode(string prefix)
-        {
-
-            if (prefix.Length != 2 || !prefix.All(c => AllowedPrefixChars.Contains(c)))
-                throw new ArgumentException("Prefix must be exactly 2 allowed characters.");
-
             if (_sequence > 999999)
                 throw new InvalidOperationException("All possible codes have been generated.");
 
             string numericPart = _sequence.ToString("D6");
-            _sequence++;
 
-            Random random = new Random();
+            Interlocked.Increment(ref _sequence);
 
             char[] codeChars = new char[12];
 
@@ -44,10 +32,9 @@
 
             codeChars[1] = prefix[1];
 
-            codeChars[2] = _year[0];
+            codeChars[2] = year[0];
 
-            codeChars[3] = _year[1];
-
+            codeChars[3] = year[1];
 
             for (int i = 0; i < 6; i++)
                 codeChars[4 + i] = numericPart[i];
@@ -56,7 +43,14 @@
             codeChars[11] = charsWithoutVowels[random.Next(charsWithoutVowels.Length)];
 
             var code = new string(codeChars);
-            var fullCode = code + Helper.CalculateChecksum(code);
+
+            var checksum = Helper.CalculateChecksum(code);
+
+            if (checksum < 0 || checksum > 9)
+                throw new InvalidOperationException("Calculated checksum is out of valid range.");
+
+            var fullCode = code + checksum;
+
             return fullCode;
         }
     }

@@ -2,7 +2,7 @@
 {
     public static class Helper
     {
-        public static readonly Dictionary<char, int> Values = new Dictionary<char, int>
+        public static readonly IReadOnlyDictionary<char, int> CharacterValues = new Dictionary<char, int>
         {
             { '0', 2 },
             { '1', 21 },
@@ -36,43 +36,54 @@
             { 'Z', 1 }
         };
         public static int CalculateWeights(string code)
-        {
-            int sum = 0;
-            for (int i = 0; i < code.Length; i++)
-            {
-                char c = code[i];
-                if (Values.TryGetValue(c, out int value))
-                {
-                    sum += value;
-                }
-            }
-            return sum;
-        }
+            =>  code.Where(CharacterValues.ContainsKey).Sum(c => CharacterValues[c]);
+
         public static int CalculateChecksum(string code)
         {
             int Weight = CalculateWeights(code);
 
-            int firDigit = Weight % 10;
-            int secDigit = (Weight / 10) % 10;
-            int thirdDigit = (Weight / 100);
+            int WeightFirstDigit = Weight / 100;           // 1
+            int WeightSecondDigit = (Weight / 10) % 10;    // 2
+            int WeightThirdDigit = Weight % 10;            // 9         
 
             int sumOfModules = 0;
 
-            int[] arrayOfValuesAndWeights = { thirdDigit, secDigit, firDigit };
+            int[] arrayOfValuesAndWeights = { WeightFirstDigit, WeightSecondDigit, WeightThirdDigit };
 
             for (int i = 0; i < code.Length; i++)
             {
                 char c = code[i];
-                if (Values.TryGetValue(c, out int value))
+                if (CharacterValues.TryGetValue(c, out int value))
                 {
                     sumOfModules += value * arrayOfValuesAndWeights[i % 3];
                 }
             }
-
-            int roundedSum = (int)(Math.Ceiling(sumOfModules / 10.0) * 10);
-            int checksum = roundedSum - sumOfModules;
+            int checksum = (10 - (sumOfModules % 10)) % 10;
             return checksum;
         }
 
+        public static IResult? ValidatePrefix(string prefix)
+        {
+            if (string.IsNullOrWhiteSpace(prefix))
+               return Results.BadRequest("Prefix cannot be null, empty, or whitespace.");
+
+            if (prefix.Length != 2)
+                return Results.BadRequest("Prefix must be exactly 2 characters long.");
+
+            if (!prefix.All(c => uCodeGenerator.AllowedPrefixChars.Contains(c)))
+                return Results.BadRequest("Prefix contains invalid characters.");
+            return null;
+        }
+
+        public static IResult? ValidateYear(string? year)
+        {
+            if (string.IsNullOrWhiteSpace(year))
+                return Results.BadRequest("Year is required.");
+
+            if (year.Length != 2 || !year.All(char.IsDigit))
+                return Results.BadRequest("Year must be exactly 2 digits.");
+
+            return null;
+        }
     }
 }
