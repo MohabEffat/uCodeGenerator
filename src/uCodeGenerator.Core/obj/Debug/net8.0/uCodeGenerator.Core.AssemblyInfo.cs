@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("uCodeGenerator.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0fc13322750e3da57ac9d9796ea34b64ed5b97a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ec7f1149d2fea8aeca0a71de802866668782e6b")]
 [assembly: System.Reflection.AssemblyProductAttribute("uCodeGenerator.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("uCodeGenerator.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
